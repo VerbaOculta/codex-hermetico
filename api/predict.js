@@ -56,22 +56,33 @@ export default async function handler(req, res) {
   }
 }
 
+
 function buildPrompt(fragments) {
   const positionTitles = {
-    Umbral: '🔮 Umbral — La energía que inicia tu búsqueda (pasado/sombra)',
-    Voz: '🜁 Voz — Lo que te habla ahora (presente/mensaje guía)',
-    Desafío: '🜃 Desafío — La resistencia o bloqueo (obstáculo/ruido interno)',
-    Sendero: '🜂 Sendero — La alquimia en marcha (proceso/destino)'
+    Umbral: '🔮 Umbral — Representa el pasado, la sombra, el impulso secreto que originó la búsqueda.',
+    Voz: '🜁 Voz — Es el presente, la guía activa, la vibración que susurra desde lo invisible.',
+    Desafío: '🜃 Desafío — Es el obstáculo interno, el ruido que distorsiona, la trampa o ilusión.',
+    Sendero: '🜂 Sendero — Es el proceso alquímico en marcha, el aprendizaje, el destino transformador.'
   };
 
   const lines = fragments.map(f => {
-    return `${positionTitles[f.position]}\nNombre: ${f.Nombre}\nMensaje: ${f['Mensaje/Interpretación']}\nSimbolismo: ${f.Simbolismo}`;
+    return `${positionTitles[f.position]}\nCarta: ${f.Nombre}\nMensaje: ${f['Mensaje/Interpretación']}\nSimbolismo: ${f.Simbolismo}`;
   });
 
-  return `Interpreta el Codex Hermético a partir de estos fragmentos:
+  return `Eres un intérprete del Codex Hermético. Tu misión es descifrar fragmentos simbólicos entregados por el buscador, en cuatro posiciones rituales. A partir de ellos, genera una lectura mística, alquímica y poética.
+
+Interpreta el significado profundo de cada posición, revelando su sentido en el camino interior del buscador. Usa metáforas, símbolos y lenguaje arquetípico. No repitas literalmente los textos dados, pero sí inspírate en su esencia.
+
+Fragmentos entregados:
 
 ${lines.join('\n\n')}
 
-Entrega una lectura alquímica, poética y simbólica sin mencionar tarot ni cartas.`;
-}
+❗Instrucciones:
+- No menciones tarot, cartas, ni tiradas.
+- Habla en segunda persona con tono profético o visionario.
+- La lectura debe parecer un mensaje canalizado o revelación interior.
+- Puedes incluir imágenes oníricas o alquímicas (el crisol, la serpiente, el oro, la transmutación, etc.)
+- Inspira, guía, desafía. Sé la voz del Codex.
 
+Comienza con: *“En el Umbral…”* y sigue revelando cada posición en orden.`;
+}
