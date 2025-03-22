@@ -1,0 +1,252 @@
+[
+  {
+    "ID": "1",
+    "Nombre": "El Maestro de la Gran Obra",
+    "Categoría": "Etapas de la Alquimia",
+    "Subcategoría": "Magnum Opus - La Consecución",
+    "Mensaje/Interpretación": "Representa al alquimista que ha completado la Gran Obra y posee la Piedra Filosofal. Ahora tiene el conocimiento y el poder de la transmutación. Es el punto culminante del camino del adepto.",
+    "Simbolismo": "Símbolos circulares representan ciclos, transmutación. La piedra filosofal brilla en sus manos, sugiriendo sabiduría y poder. Figuras alrededor indican discípulos o buscadores del conocimiento.",
+    "Combinaciones": "Se relaciona con \"El Iniciado\" (principio del camino), \"El Fuego Secreto\" (proceso de purificación), y \"El Filósofo Oculto\" (el conocimiento esotérico alcanzado).",
+    "Imagen URL": "Carta_1"
+  },
+  {
+    "ID": "2",
+    "Nombre": "El Guardián del Silencio",
+    "Categoría": "Hermes y la Sabiduría",
+    "Subcategoría": "El Mensajero Oculto",
+    "Mensaje/Interpretación": "El conocimiento no se entrega abiertamente, sino que debe descubrirse a través del silencio y la introspección. Lo que está oculto solo se revela a quienes saben escuchar más allá de las palabras.",
+    "Simbolismo": "- Sello del Silencio: El círculo sobre la cabeza representa el compromiso del iniciado con el secreto. - Obelisco con glifos: Representa la permanencia del conocimiento en símbolos ancestrales. - Luna en el fondo: Lo oculto, la intuición y la verdad que se revela progresivamente. - Pose hierática: Indica dominio del conocimiento y la responsabilidad de protegerlo.",
+    "Combinaciones": "Se potencia con \"El Sabio en la Sombra\" (maestro secreto) y \"El Umbral de la Revelación\" (paso a un nuevo nivel de entendimiento). Se contrasta con \"La Voz del Oráculo\" (hablar la verdad)",
+    "Imagen URL": "Carta_2"
+  },
+  {
+    "ID": "3",
+    "Nombre": "Génesis en la Retorta",
+    "Categoría": "La Gran Obra",
+    "Subcategoría": "Multiplicatio",
+    "Mensaje/Interpretación": "La transformación está en marcha. El crecimiento ocurre tras la privación y la purificación. Este es el momento de la expansión y la abundancia, bajo la guía de fuerzas superiores.",
+    "Simbolismo": "El matraz simboliza la transformación interior. Los colores en la retorta representan las fases del opus alquímico. La presencia de figuras elevadas sugiere que el conocimiento y la jerarquía espiritual guían este proceso.",
+    "Combinaciones": "Se asocia con cartas de transmutación y culminación de procesos alquímicos, como \"El Alquimista Supremo\" y \"La Obra Concluida\".",
+    "Imagen URL": "Carta_3"
+  },
+  {
+    "ID": "4",
+    "Nombre": "La Armonía de las Esferas",
+    "Categoría": "Conocimiento Sagrado",
+    "Subcategoría": "Música Cósmica",
+    "Mensaje/Interpretación": "La vibración de la creación resuena en el alma despierta. La música de los astros revela el orden oculto.",
+    "Simbolismo": "El símbolo de la armonía universal, la luz emanando del centro, la meditación trascendental.",
+    "Combinaciones": "Se enlaza con \"El Arquitecto de la Realidad\" y \"El Eterno Retorno\".",
+    "Imagen URL": "Carta_4"
+  },
+  {
+    "ID": "5",
+    "Nombre": "El Consejo de los Arcanos",
+    "Categoría": "Cartas Esotéricas/Simbólicas",
+    "Subcategoría": "Los Custodios del Secreto",
+    "Mensaje/Interpretación": "El conocimiento más profundo no se obtiene solo, sino que es revelado por quienes lo han custodiado a lo largo del tiempo. Para avanzar, el buscador debe demostrar su dignidad y preparación ante el Consejo.",
+    "Simbolismo": "Círculo de sabios: representan la tradición y el conocimiento ancestral transmitido en cadena. - Orbe de energía: el conocimiento condensado en un solo punto de luz, indicando iluminación y sabiduría. - Rayos descendentes: revelación del conocimiento divino o trascendental. - Portales en el fondo: representan el umbral hacia otras realidades del entendimiento.",
+    "Combinaciones": "Se potencia con \"El Guardián del Silencio\" (el conocimiento debe protegerse), \"La Armonía de las Esferas\" (la estructura oculta del saber), y \"El Umbral de la Revelación\" (prueba iniciática para recibir el conocimiento).",
+    "Imagen URL": "Carta_5"
+  },
+  {
+    "ID": "6",
+    "Nombre": "El Sol Interior",
+    "Categoría": "Los 4 Elementos",
+    "Subcategoría": "Fuego - Iluminación y Poder",
+    "Mensaje/Interpretación": "El fuego más poderoso no es el que destruye, sino el que ilumina desde dentro. La llama eterna del conocimiento y la transformación arde en el centro del iniciado. Solo aquel que se alinea con su luz puede trascender la oscuridad.",
+    "Simbolismo": "Cabeza-Sol: Representa la iluminación espiritual y el fuego interno que guía el camino. Suelo ajedrezado: Simboliza la dualidad del conocimiento: luz y sombra, orden y caos. Objetos dispersos: Elementos alquímicos aún en proceso de transformación. Fondo cósmico: Conexión con el orden universal y la sabiduría trascendental.",
+    "Combinaciones": "Se potencia con \"El Maestro de la Gran Obra\" → Cuando el fuego alcanza su máxima expresión en el adepto. Se enlaza con \"La Armonía de las Esferas\" → Cuando el iniciado entiende su lugar en el cosmos. Se contrasta con \"El Guardián del Silencio\" → Fuego como revelación, mientras que el silencio lo resguarda.",
+    "Imagen URL": "Carta_6"
+  },
+  {
+    "ID": "7",
+    "Nombre": "La Brújula de los Sabios",
+    "Categoría": "Principios Herméticos",
+    "Subcategoría": "Correspondencia – “Como es arriba, es abajo”",
+    "Mensaje/Interpretación": "Toda realidad visible es el reflejo de un orden invisible. Lo que sucede en lo alto tiene su eco en lo bajo, y viceversa. Esta brújula guía al iniciado a través de los planos del ser, mostrando que el camino hacia el conocimiento interior es también el camino hacia la comprensión del cosmos.",
+    "Simbolismo": "Eje superior/inferior: el puente entre el espíritu y la materia. Pilares: dualidad de principios cósmicos y arquetípicos. Cúpula con símbolos planetarios: la integración de todas las fuerzas en el “lapis philosophorum”. Disposición vertical con espejo: muestra que la sabiduría es simétrica, reflejo y resonancia.",
+    "Combinaciones": "Se enlaza con \"El Sol Interior\" (la luz que nace dentro refleja la luz cósmica). Se potencia con \"La Armonía de las Esferas\" (la vibración universal en todos los planos). Se contrasta con \"El Laberinto Interno\" (cuando lo de dentro parece no corresponder con lo de fuera).",
+    "Imagen URL": "Carta_7"
+  },
+  {
+    "ID": "8",
+    "Nombre": "La Cripta del Renacimiento",
+    "Categoría": "Etapas de la Gran Obra Alquímica",
+    "Subcategoría": "Nigredo – La Disolución / La Muerte Iniciática",
+    "Mensaje/Interpretación": "Solo al morir simbólicamente puede el iniciado renacer. En la oscuridad de la cripta, donde la materia se descompone y el ego se disuelve, nace el fuego secreto que permite la verdadera transmutación.",
+    "Simbolismo": "Féretro: el cuerpo del ego entregado al proceso. Calavera: conciencia de la muerte como paso necesario. Rama brotando: la vida que solo puede surgir tras la putrefacción. Herramientas rituales: el proceso alquímico no es pasivo, requiere acción y voluntad. Pavimento blanco y negro: recordatorio de la dualidad como campo de trabajo del adepto.",
+    "Combinaciones": "Se enlaza con El Maestro de la Gran Obra (la culminación de esta etapa). Se potencia con Génesis en la Retorta (fase siguiente del proceso). Se contrasta con El Consejo de los Arcanos (conocimiento revelado tras la muerte iniciática).",
+    "Imagen URL": "Carta_8"
+  },
+  {
+    "ID": "9",
+    "Nombre": "La Balanza de los Opuestos",
+    "Categoría": "Principios Herméticos",
+    "Subcategoría": "Polaridad – “Todo es dual, todo tiene su par de opuestos”",
+    "Mensaje/Interpretación": "Nada es estático, todo está en equilibrio dinámico. Luz y oscuridad, creación y destrucción, amor y miedo. Comprender la naturaleza de los opuestos permite trascender la ilusión del conflicto. Quien domina este principio, encuentra la armonía más allá de la dualidad",
+    "Simbolismo": "Círculo con polos opuestos → El universo es una rueda donde todo fluye de un extremo al otro. Siete cualidades naturales → Representan las fuerzas fundamentales del cosmos en constante interacción. Corazones conectados → Sugieren que la dualidad no es separación, sino un circuito de energía en movimiento. Planetas y estructuras geométricas → Simbolizan que la realidad está construida en base a leyes universales.",
+    "Combinaciones": "Se potencia con \"La Brújula de los Sabios\" → Ambas cartas tratan sobre el orden cósmico y sus reflejos. Se enlaza con \"La Armonía de las Esferas\" → Porque el ritmo de los opuestos genera el equilibrio universal. Se contrasta con \"El Guardián del Silencio\" → Polaridad como revelación, mientras que el silencio resguarda el misterio.",
+    "Imagen URL": "Carta_9"
+  },
+  {
+    "ID": "10",
+    "Nombre": "El Laberinto Interno",
+    "Categoría": "Cartas Esotéricas/Simbólicas",
+    "Subcategoría": "Búsqueda Interior / Prueba de la Sombra",
+    "Mensaje/Interpretación": "Todo camino verdadero inicia en el desconcierto. El laberinto no es un castigo, sino un mapa vivo del alma. Solo quien se atreve a caminarlo con fe o con fuego interior encuentra la salida. A veces la salida no es un lugar, sino una revelación.",
+    "Simbolismo": "Laberinto: el inconsciente, la confusión mental, la prueba iniciática. Peregrino: el iniciado, el buscador. Bastón y dirección: símbolo de voluntad y propósito. Torre de luz: símbolo de integración, sabiduría o alma superior. Perspectiva ascendente: el camino es arduo, pero con dirección clara.",
+    "Combinaciones": "Se enlaza con La Cripta del Renacimiento → ambos representan fases de transformación por oscuridad. Se potencia con La Brújula de los Sabios → cuando el laberinto se comprende como un mapa cósmico. Se contrasta con El Maestro de la Gran Obra → quien ya ha salido del laberinto y domina su centro.",
+    "Imagen URL": "Carta_10"
+  },
+  {
+    "ID": "11",
+    "Nombre": "La Hija del Agua",
+    "Categoría": "Los 4 Elementos",
+    "Subcategoría": "Agua / Mercurio Alquímico",
+    "Mensaje/Interpretación": "Del caos líquido emerge la portadora de la luz. No todo lo que es confuso está perdido; en las aguas oscuras habita el secreto de la unión. Allí donde el alma se disuelve, nace la conciencia que ha abrazado lo dual.",
+    "Simbolismo": "Agua: lo inconsciente, lo emocional, lo femenino, lo profundo. - Mercurio alquímico: principio unificador y mensajero espiritual. - Sol y Luna: polaridades en equilibrio. - Orbe: el fuego en el agua, la chispa dentro del caos. - Caduceo: el viaje espiritual de integración.",
+    "Combinaciones": "- Se enlaza con 'La Brújula de los Sabios' (correspondencia y unión de planos). - Se potencia con 'La Cripta del Renacimiento' (ambas trabajan desde el interior de lo oscuro). - Se contrasta con 'El Sol Interior' (fuego como impulso activo; agua como matriz pasiva).",
+    "Imagen URL": "Carta_11"
+  },
+  {
+    "ID": "12",
+    "Nombre": "El Baño del Rey Rojo",
+    "Categoría": "Etapas de la Gran Obra Alquímica",
+    "Subcategoría": "Purificación / Albedo",
+    "Mensaje/Interpretación": "El rey, símbolo del ego o la materia bruta, se somete a la cámara cerrada de la purificación. Lo que arde en su interior no es fuego externo, sino el calor del alma en proceso de redención. Solo atravesando el vapor del sacrificio puede emerger la luz interna.",
+    "Simbolismo": "- El rey: el yo que debe ser transformado. - La cámara cerrada: el proceso oculto, interno y hermético. - El vapor y el calor: los agentes purificadores. - El color rojizo: preludio del rubedo, señal de que la transmutación ha comenzado.",
+    "Combinaciones": "- Se enlaza con 'La Cripta del Renacimiento' como fase previa al despertar. - Se potencia con 'La Hija del Agua', purificación desde lo emocional y lo sutil. - Se contrasta con 'El Maestro de la Gran Obra', que representa el resultado final de este proceso.",
+    "Imagen URL": "Carta_12"
+  },
+  {
+    "ID": "13",
+    "Nombre": "La Vestidura del Alma",
+    "Categoría": "Etapas de la Gran Obra Alquímica",
+    "Subcategoría": "Transición de Albedo a Rubedo",
+    "Mensaje/Interpretación": "Tras haber atravesado las etapas oscuras y purificadoras, el alma está lista para ser revestida de su verdadera dignidad espiritual. La 'vestidura roja' representa la sublimación del espíritu, una elevación hacia su esencia noble. Es el instante en que lo divino reconoce y acoge lo humano transformado.",
+    "Simbolismo": "- El ángel con corona: guía espiritual, fuerza divina del despertar. - El hombre negro: símbolo del Nigredo, aún marcado por la sombra pero emergiendo. - El manto rojo: anticipación del Rubedo, la realeza interior que se manifiesta. - El paisaje sereno: armonía alcanzada tras el caos alquímico.",
+    "Combinaciones": "- Se enlaza con 'El Baño del Rey Rojo' como continuación espiritual. - Potencia a 'El Maestro de la Gran Obra', como preparación para la integración final. - Contrasta con 'Génesis en la Retorta', que representa la expansión material aún impura.",
+    "Imagen URL": "Carta_13"
+  },
+  {
+    "ID": "14",
+    "Nombre": "La Obra Concluida",
+    "Categoría": "Etapas de la Gran Obra Alquímica",
+    "Subcategoría": "Rubedo – Culminación",
+    "Mensaje/Interpretación": "El Rubedo representa la culminación del viaje alquímico. El espíritu ha atravesado la oscuridad, la purificación y la sublimación, y ahora reina en equilibrio. El Rey Rojo, vestido con la púrpura de la realeza interior, simboliza la integración plena entre el alma y la materia. Es la consagración final del adepto, que ha alcanzado la piedra filosofal interior.",
+    "Simbolismo": "- El Rey Rojo: símbolo de la maestría espiritual y la unión entre lo divino y lo humano. - La retorta sellada: representa un proceso cerrado, perfecto, irreversible. - Flores, aves y naturaleza: armonía con el entorno, el alma reconciliada con el cosmos. - Color rojo y dorado: madurez espiritual, gloria y fuego transformador estabilizado.",
+    "Combinaciones": "- Cierra el ciclo iniciado por 'El Maestro de la Gran Obra'. - Puede potenciar la lectura si aparece junto a 'La Vestidura del Alma'. - Contrasta con 'El Guardián del Silencio', mostrando lo revelado frente a lo oculto.",
+    "Imagen URL": "Carta_14"
+  },
+  {
+    "ID": "15",
+    "Nombre": "El Árbol Filosófico",
+    "Categoría": "Los 4 Elementos",
+    "Subcategoría": "Tierra",
+    "Mensaje/Interpretación": "Simboliza el crecimiento espiritual y material desde lo denso hacia lo sutil. El árbol plantado en la piedra filosofal permite que los pájaros (pensamientos, ideas, sabiduría) se reproduzcan, elevando la conciencia. Representa el proceso alquímico que transforma lo burdo en oro espiritual.",
+    "Simbolismo": "El árbol representa la materia viva que sostiene la evolución del alma. Los pájaros simbolizan el ascenso espiritual y mental. La escalera: el proceso gradual de ascenso del alquimista. La corona en la base: la nobleza oculta en lo terrenal. El cuervo que se torna blanco: transformación de la nigredo a la albedo.",
+    "Combinaciones": "Se potencia con \"La Piedra del Caos\" (materia prima), \"El Baño del Rey Rojo\" (purificación) y \"La Hija del Agua\" (flujo espiritual).",
+    "Imagen URL": "Carta_15"
+  },
+  {
+    "ID": "16",
+    "Nombre": "La Voz del Aire",
+    "Categoría": "Los 4 Elementos",
+    "Subcategoría": "Aire",
+    "Mensaje/Interpretación": "La sabiduría se transmite desde lo alto a quienes están preparados para escuchar. Representa la revelación espiritual que llega en momentos de silencio y contemplación.",
+    "Simbolismo": "Ángel alado y coronado (voz divina), gran árbol (vida y conexión celeste-terrenal), palomas (espíritu), túnicas (discípulos o buscadores), postura de enseñanza.",
+    "Combinaciones": "Con Carta 7 (La Brújula de los Sabios) potencia su aspecto de revelación oculta; con Carta 15 (El Árbol Filosófico) profundiza en el aprendizaje como conexión con lo sagrado. Con \"Geometría Divina\" integra la idea de que la sabiduría no solo se escucha, sino que resuena en patrones cósmicos.",
+    "Imagen URL": "Carta_16"
+  },
+  {
+    "ID": "17",
+    "Nombre": "El Huevo Cósmico",
+    "Categoría": "Arquetipos",
+    "Subcategoría": "Génesis Universal",
+    "Mensaje/Interpretación": "Todo lo que existe proviene de un centro común, una espiral eterna de creación y disolución. Esta carta habla del inicio absoluto, del misterio del origen y del movimiento perpetuo del cosmos.",
+    "Simbolismo": "El huevo alquímico; fusión solar y lunar; espiral central como símbolo de la expansión infinita; el todo contenido en la unidad. Representa la matriz de toda manifestación, donde la luz y la sombra danzan como uno solo.",
+    "Combinaciones": "Con La Balanza de los Opuestos → revela una integración profunda de polaridades internas. Con La Voz del Aire → indica una revelación espiritual sobre el propósito del alma en el ciclo universal. Con \"Geometría Divina\", pues muestra cómo del caos primigenio emergen las formas arquetípicas del universo.",
+    "Imagen URL": "Carta_17"
+  },
+  {
+    "ID": "18",
+    "Nombre": "La Morada Sagrada",
+    "Categoría": "Arquetipos",
+    "Subcategoría": "El templo interior",
+    "Mensaje/Interpretación": "El ascenso espiritual requiere atravesar niveles de conciencia que deben ser recorridos en orden, guiado por la sabiduría interior.",
+    "Simbolismo": "La estructura escalonada representa los peldaños iniciáticos hacia la iluminación; la escalera central evoca la conexión entre cielo y tierra; la figura del templo simboliza el alma como recinto sagrado.",
+    "Combinaciones": "Se potencia con La Voz del Aire (16) y El Árbol Filosófico (15), formando una tríada de elevación, sabiduría y anclaje.",
+    "Imagen URL": "Carta_18"
+  },
+  {
+    "ID": "19",
+    "Nombre": "El Sol Doble",
+    "Categoría": "Principios Internos",
+    "Subcategoría": "Dualidad Espiritual",
+    "Mensaje/Interpretación": "Representa la unión alquímica de opuestos: masculino y femenino, sol y luna, espíritu y materia.",
+    "Simbolismo": "El andrógino coronado con alas de murciélago y capa bicolor encarna el equilibrio perfecto entre la luz y la sombra. El dragón a sus pies simboliza la energía primal transformada.",
+    "Combinaciones": "Potencia la claridad de \"La Voz del Aire\" y revela el propósito cuando se combina con \"La Hija del Agua\".",
+    "Imagen URL": "Carta_19"
+  },
+  {
+    "ID": "20",
+    "Nombre": "Geometría Divina",
+    "Categoría": "Conocimiento",
+    "Subcategoría": "Principios Universales",
+    "Mensaje/Interpretación": "Todo en el universo surge de formas esenciales y armoniosas. Esta carta te recuerda que el orden subyacente de la realidad no es caótico, sino profundamente simétrico. Al alinear tus acciones con este patrón, accedes a un plano más elevado de sabiduría.",
+    "Simbolismo": "Sólidos platónicos, mandala central, luz dorada divina, equilibrio geométrico, proporción áurea, fondo cósmico, trazos de códices antiguos.",
+    "Combinaciones": "Con \"El Sol Doble\", revela que la dualidad no es caos, sino parte de un diseño sagrado. Con \"El Árbol Filosófico\", expresa cómo el crecimiento sigue proporciones cósmicas. Con \"El Huevo Cósmico\", establece que el patrón universal ya existe en el instante del origen.",
+    "Imagen URL": "Carta_20"
+  },
+  {
+    "ID": "21",
+    "Nombre": "La Piedra del Caos",
+    "Categoría": "Etapas de la Gran Obra Alquímica",
+    "Subcategoría": "Prima Materia – El Origen Oscuro",
+    "Mensaje/Interpretación": "Todo lo que es, fue y será, surge del vientre oscuro de la materia indiferenciada. El caos no es desorden, sino potencial puro: la semilla de todas las formas, la matriz de toda creación. Aceptar el caos interior es abrazar el misterio de nuestra propia transformación.",
+    "Simbolismo": "Esfera negra: el huevo alquímico no manifestado, símbolo del origen absoluto. Figura telúrica ascendente: la fuerza de lo informe que comienza a tomar forma. Montañas y grietas: representan la matriz terrestre, el útero de la transmutación. Cruces dobles: aluden al principio y fin reunidos en una misma potencia. Aura oscura: lo no revelado, lo eterno, el germen de la posibilidad.",
+    "Combinaciones": "Con La Cripta del Renacimiento (8): refuerza la idea de que toda muerte es un regreso al caos original. Con La Obra Concluida (14): muestra el viaje completo desde el caos a la perfección. Con El Huevo Cósmico (17): revela que el caos y la creación no son opuestos, sino fases de la misma danza cósmica.",
+    "Imagen URL": "Carta_21"
+  },
+  {
+    "ID": "22",
+    "Nombre": "El Sendero Infinito",
+    "Categoría": "Arquetipos",
+    "Subcategoría": "Ascenso Iniciático",
+    "Mensaje/Interpretación": "El verdadero camino hacia el conocimiento no es una línea recta, sino una espiral ascendente donde cada peldaño representa una etapa de maduración espiritual. Esta carta invita a confiar en el proceso, incluso cuando el final no es visible. La evolución del alma requiere entrega, paciencia y voluntad de transformación.",
+    "Simbolismo": "Escalera curva ascendente: la vía iniciática que desafía la lógica lineal. Templo con columnas: meta espiritual, estructura del saber superior. Iniciado en ascenso: voluntad activa en el proceso de elevación. Ojo radiante en lo alto: conciencia superior que guía. Fondo abismal: lo mundano y el caos superado.",
+    "Combinaciones": "Se enlaza con La Morada Sagrada (18) como meta estructurada de este ascenso. Potencia a El Laberinto Interno (10), indicando que tras la confusión viene la escalera. Contrasta con El Caos Primordial (21), mostrando la forma ordenada surgida del germen original.",
+    "Imagen URL": "Carta_22"
+  },
+  {
+    "ID": "B1",
+    "Nombre": "El Guardián del Umbral",
+    "Categoría": "Carta Bono",
+    "Subcategoría": "Guardián del Mazo",
+    "Mensaje/Interpretación": "Esta carta no busca ser revelada. Solo aparece cuando el camino del alma ha madurado lo suficiente como para enfrentar su sombra más grande o su verdad más profunda. Representa el momento de transición entre mundos, el umbral donde el poder del símbolo se vuelve carne y decisión. El Guardián no habla, pero su presencia transforma.",
+    "Simbolismo": "Figura colosal encapuchada: lo inabarcable del misterio, la totalidad no revelada. Bastón que toca la tierra: conexión entre el cosmos y el peregrino. Caminante diminuto: el iniciado frente a lo Absoluto. Círculo de luz sobre la cabeza: iluminación o revelación trascendente. Arco con columnas: umbral entre mundos, lo conocido y lo velado.",
+    "Combinaciones": "Con El Laberinto Interno (10): cuando el buscador está por encontrar el verdadero centro. Con La Voz del Aire (16): indica que la enseñanza final está por revelarse. Con El Maestro de la Gran Obra (1): sugiere que el adepto se ha convertido en Guardián de otros caminos.",
+    "Imagen URL": "Carta_Bono_1"
+  },
+  {
+    "ID": "B2",
+    "Nombre": "El Fuerte de la Hermandad",
+    "Categoría": "Carta Bono",
+    "Subcategoría": "Refugio de Sabiduría",
+    "Mensaje/Interpretación": "El conocimiento sagrado no siempre se encuentra en templos visibles. A veces, se oculta tras muros simbólicos, custodiado por guardianes invisibles. Este Fuerte representa la sabiduría compartida por una hermandad secreta, accesible solo a quienes han purificado su intención y afinado su percepción. No se entra por la fuerza, sino por resonancia.",
+    "Simbolismo": "Carro de piedra sobre ruedas: movilidad espiritual, sabiduría que viaja sin ser vista. Cúpula con alas: ascensión, elevación del pensamiento. Espadas cruzadas y centinelas alados: protección del saber frente al mundo profano. Rayos celestiales con inscripciones: conexión divina, mensajes desde el plano superior. Peregrinos a lo lejos: quienes aún buscan, sin saber que el Fuerte está ya ante ellos.",
+    "Combinaciones": "Con \"El Guardián del Umbral\" (Carta 0) → revela que el conocimiento que protege el Guardián se aloja en este Fuerte. Con \"El Consejo de los Arcanos\" (Carta 5) → muestra la continuación de la tradición hermética, ahora reunida en este refugio. Con \"El Laberinto Interno\" (Carta 10) → indica que tras superar la prueba interior, el buscador puede hallar este lugar.",
+    "Imagen URL": "Carta_Bono_2"
+  },
+  {
+    "ID": "B3",
+    "Nombre": "El Círculo Viviente",
+    "Categoría": "Carta Bono",
+    "Subcategoría": "Unión de los Opuestos / Eternidad Alquímica",
+    "Mensaje/Interpretación": "Representa el eterno retorno del alma a través de los ciclos de transformación. El árbol del conocimiento crece desde la alquimia del caos, enraizado en la flor oscura del misterio y rodeado por el ouroboros, símbolo del infinito. Esta carta indica que el buscador ha cruzado el umbral de la dualidad y ahora vive dentro del flujo del Uno.",
+    "Simbolismo": "Ouroboros circular: la serpiente que se devora a sí misma representa el ciclo infinito de muerte y renacimiento, y la totalidad contenida en sí misma. Árbol central: símbolo de la conciencia que florece desde la integración de opuestos. Flor negra bajo el árbol: representa el misterio primordial y la materia prima espiritual. Cielo estrellado y símbolos esotéricos: indica sabiduría ancestral, astrología, y conexión cósmica.",
+    "Combinaciones": "Se potencia con \"El Huevo Cósmico\" (inicio universal) y \"La Morada Sagrada\" (ascenso interior), formando una trilogía de gestación, crecimiento y expansión del alma. Contrasta con \"La Cripta del Renacimiento\", mostrando el resultado final del viaje a través de la oscuridad. Si aparece junto a \"El Árbol Filosófico\", indica integración total entre materia y espíritu.",
+    "Imagen URL": "Carta_Bono_3"
+  }
+]
