@@ -1,52 +1,60 @@
+import { OpenAI } from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, // Tu clave en variable de entorno
+});
+
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método no permitido' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Método no permitido" });
   }
 
-  const { codexFragments } = req.body;
+  const { fragments } = req.body;
 
-  if (!codexFragments || codexFragments.length !== 4) {
-    return res.status(400).json({ error: 'Se requieren 4 fragmentos del Codex' });
+  if (!fragments || fragments.length !== 4) {
+    return res.status(400).json({ error: "Debes enviar 4 fragmentos del Codex" });
   }
 
-  // Preparar el mensaje para la IA
-  const prompt = `
-Eres un intérprete alquímico. El buscador ha revelado cuatro fragmentos del Codex Hermético. 
-Interpreta su combinación de forma simbólica y profunda, sin mencionar que son cartas. 
-Usa un tono místico y hermético. Las posiciones son:
+  const systemMessage = `
+Eres un intérprete alquímico. Tienes acceso a un antiguo Codex Hermético dividido en 22 fragmentos. Cada fragmento guarda una visión cifrada. 
+Cuando un buscador selecciona 4 fragmentos, se posicionan así:
 
-— Umbral (pasado/sombra): ${codexFragments[0]}
-— Voz (presente/mensaje guía): ${codexFragments[1]}
-— Desafío (resistencia/bloqueo): ${codexFragments[2]}
-— Sendero (proceso/destino): ${codexFragments[3]}
+1. Umbral → Representa la energía que inicia la búsqueda (pasado/sombra).
+2. Voz → Lo que habla ahora (presente/mensaje guía).
+3. Desafío → La resistencia o bloqueo (obstáculo interno).
+4. Sendero → La alquimia en marcha (proceso o destino en transformación).
 
-Ofrece una lectura simbólica que combine sus significados como una visión integrada.
+Tu misión es generar una interpretación simbólica y profunda, usando un lenguaje críptico, místico y elegante. No menciones el tarot, ni uses terminología moderna. 
+Combina los mensajes, el simbolismo y las correspondencias alquímicas para entregar una visión unificada que parezca provenir de un manuscrito secreto.
+
+No repitas los nombres de las cartas como título, simplemente transmite el mensaje como si se tratara de un oráculo hermético revelando su verdad.
+`;
+
+  const userMessage = `
+Fragmentos elegidos:
+
+1. ${fragments[0].nombre}: ${fragments[0].mensaje}
+2. ${fragments[1].nombre}: ${fragments[1].mensaje}
+3. ${fragments[2].nombre}: ${fragments[2].mensaje}
+4. ${fragments[3].nombre}: ${fragments[3].mensaje}
 `;
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo", 
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.7,
-      }),
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: systemMessage },
+        { role: "user", content: userMessage },
+      ],
+      temperature: 0.85,
+      max_tokens: 900,
     });
 
-    const data = await response.json();
+    const result = completion.choices[0].message.content;
 
-    const result = data.choices?.[0]?.message?.content;
-
-    if (!result) {
-      throw new Error("Respuesta vacía del modelo");
-    }
-
-    return res.status(200).json({ interpretation: result });
+    res.status(200).json({ result });
   } catch (error) {
-    return res.status(500).json({ error: "Error al generar interpretación", details: error.message });
+    console.error("Error en la predicción:", error);
+    res.status(500).json({ error: "Algo salió mal al invocar el oráculo" });
   }
 }
