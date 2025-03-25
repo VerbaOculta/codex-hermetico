@@ -5,6 +5,16 @@ import { OpenAI } from 'openai';
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function handler(req, res) {
+  // Habilitar CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    // Responder preflight CORS
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -16,12 +26,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Invalid request format' });
     }
 
-    // Ruta al archivo JSON local
     const filePath = path.join(process.cwd(), 'data', 'codex-hermetico.json');
     const fileContents = await fs.readFile(filePath, 'utf8');
     const codexData = JSON.parse(fileContents);
 
-    // Buscar detalles de las cartas seleccionadas
     const selectedFragments = selectedCards.map((id, index) => {
       const match = codexData.find(card => card.ID === id);
       return {
@@ -30,10 +38,8 @@ export default async function handler(req, res) {
       };
     });
 
-    // Construir el prompt para la IA
     const prompt = buildPrompt(selectedFragments);
 
-    // Llamar a OpenAI con el prompt generado
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
@@ -49,13 +55,12 @@ export default async function handler(req, res) {
     });
 
     const response = completion.choices[0].message.content;
-    res.status(200).json({ result: response });
+    res.status(200).json({ prediction: response }); // <-- IMPORTANTE: usa 'prediction' como clave para el frontend
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error generating prediction' });
   }
 }
-
 
 function buildPrompt(fragments) {
   const positionTitles = {
