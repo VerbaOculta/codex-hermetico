@@ -89,5 +89,20 @@ ${lines.join('\n\n')}
 - Puedes incluir imágenes oníricas o alquímicas (el crisol, la serpiente, el oro, la transmutación, etc.)
 - Inspira, guía, desafía. Sé la voz del Codex.
 
-Comienza con: *“En el Umbral…”* y sigue revelando cada posición en orden.`;
+Devuelve tu mensaje dividido claramente en 4 secciones, comenzando cada una con:
+
+Umbral:
+Voz:
+Desafío:
+Sendero:
+
+Ejemplo:
+
+Umbral: [mensaje canalizado aquí]
+Voz: [mensaje canalizado aquí]
+Desafío: ...
+Sendero: ...
+
+`;
+  
 }
