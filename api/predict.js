@@ -51,8 +51,8 @@ export default async function handler(req, res) {
           content: prompt
         }
       ],
-      max_tokens: 1000,
-      timeout: 20000 // en milisegundos (20 segundos)
+      max_tokens: 1000
+    
     });
 
     const response = completion.choices[0].message.content;
