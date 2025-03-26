@@ -2,6 +2,10 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { OpenAI } from 'openai';
 
+export const config = {
+  runtime: 'nodejs'
+};
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function handler(req, res) {
@@ -51,14 +55,16 @@ export default async function handler(req, res) {
           role: 'user',
           content: prompt
         }
-      ]
+      ],
+      max_tokens: 1000, // nuevo límite de tokens
+      timeout: 20000 // 20 segundos
     });
 
     const response = completion.choices[0].message.content;
-    res.status(200).json({ prediction: response }); // <-- IMPORTANTE: usa 'prediction' como clave para el frontend
+    res.status(200).json({ prediction: response });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error generating prediction' });
+    console.error('[Codex API Error]', error);
+    res.status(500).json({ error: 'Error generating prediction', details: error.message });
   }
 }
 
@@ -104,5 +110,4 @@ Desafío: ...
 Sendero: ...
 
 `;
-  
 }
