@@ -2,10 +2,6 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { OpenAI } from 'openai';
 
-export const config = {
-  runtime: 'nodejs'
-};
-
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function handler(req, res) {
@@ -15,8 +11,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
-    // Responder preflight CORS
-    return res.status(200).end();
+    return res.status(200).end(); // preflight CORS
   }
 
   if (req.method !== 'POST') {
@@ -56,8 +51,8 @@ export default async function handler(req, res) {
           content: prompt
         }
       ],
-      max_tokens: 1000, // nuevo límite de tokens
-      timeout: 20000 // 20 segundos
+      max_tokens: 1000,
+      timeout: 20000 // en milisegundos (20 segundos)
     });
 
     const response = completion.choices[0].message.content;
@@ -101,13 +96,5 @@ Umbral:
 Voz:
 Desafío:
 Sendero:
-
-Ejemplo:
-
-Umbral: [mensaje canalizado aquí]
-Voz: [mensaje canalizado aquí]
-Desafío: ...
-Sendero: ...
-
 `;
 }
