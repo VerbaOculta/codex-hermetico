@@ -1,4 +1,4 @@
-// Nueva API que considera intención y cartas seleccionadas con mejor estructura narrativa
+// API optimizada del Codex Hermético con GPT-3.5 (versión mejorada)
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -16,6 +16,7 @@ export default async function handler(req, res) {
 
   try {
     const { selectedCards, intent } = req.body;
+
     if (!selectedCards || !Array.isArray(selectedCards) || selectedCards.length !== 4 || !intent) {
       return res.status(400).json({ error: 'Invalid request format' });
     }
@@ -25,7 +26,8 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      return codexData.find(card => card.ID.toString() === id.toString());
+      const match = codexData.find(card => String(card.ID) === String(id));
+      return match;
     });
 
     const prompt = buildPrompt({ fragments: selectedFragments, intent });
@@ -35,7 +37,7 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico y visionario, pero cada vez más claro conforme avanza el texto.'
+          content: 'Eres un guía místico y alquímico. Escribe de forma simbólica, poética y clara, sin mencionar el nombre de las cartas, y sin comparaciones con el tarot. Evoca transformación interior y sabiduría universal con un lenguaje accesible pero elevado.'
         },
         {
           role: 'user',
@@ -46,6 +48,7 @@ export default async function handler(req, res) {
     });
 
     const result = completion.choices[0].message.content;
+
     res.status(200).json({ synthesis: result });
   } catch (error) {
     console.error('[Codex Error]', error);
@@ -54,19 +57,22 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments.map(f => `Nombre simbólico: ${f.Nombre}\nSignificado: ${f["Mensaje/Interpretación"]}\nSímbolos clave: ${f.Simbolismo}`).join("\n\n");
+  const fragmentDescriptions = fragments.map((f, i) => `Fragmento ${i + 1} →\nSímbolos: ${f.Simbolismo}\nInterpretación: ${f["Mensaje/Interpretación"]}`).join("\n\n");
 
-  return `Un usuario ha elegido 4 fragmentos del Codex Hermético con la intención de manifestar: "${intent}".
+  return `Un buscador ha manifestado la intención de transformar su vida a través del camino de: "${intent}". Ha recibido 4 fragmentos del Codex Hermético.
 
-Tu tarea es canalizar una interpretación profunda e inspiradora que conecte la intención del usuario con los 4 fragmentos seleccionados. El mensaje debe mantener un tono místico, simbólico y alquímico, pero volverse cada vez más claro y aplicable hacia el final.
+Tu tarea es canalizar una revelación profunda que conecte los símbolos y mensajes de esos fragmentos con la intención declarada. Utiliza un lenguaje que inspire, que toque el deseo, el anhelo, el miedo y la transformación.
 
-Estructura de la respuesta:
-1. Canalización individual de cada fragmento.
-2. Interpretación holística: cómo se unen los mensajes para guiar al usuario respecto a su intención.
-3. Cierre: una invitación emocional y dramática a elegir entre dos futuros posibles, sin mencionar cartas ni predicciones, apelando a su libre albedrío y a su transformación personal.
+Estructura del mensaje:
+1. Descripción canalizada de cada fragmento sin mencionar que son cartas (usa "símbolo", "figura", "mensaje", "principio").
+2. Una reflexión integradora que conecte los mensajes con la intención del usuario.
+3. Un cierre dramático e inspirador: dile que dos fragmentos lo esperan para revelar el siguiente peldaño de su camino. No reveles aún cuáles son. Habla de una decisión que solo el alma puede tomar.
 
-Fragmentos seleccionados:
+Evita en todo momento mencionar la palabra "carta" o "tarot". Esta experiencia es única y sagrada.
+
+Fragmentos recibidos:
+
 ${fragmentDescriptions}
 
-Intención: ${intent}`;
+Intención declarada: ${intent}`;
 }
