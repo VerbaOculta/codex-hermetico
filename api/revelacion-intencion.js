@@ -1,4 +1,4 @@
-// Nueva API que considera intención y cartas seleccionadas
+// Nueva API que considera intención y cartas seleccionadas con mejor estructura narrativa
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -11,17 +11,11 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
     const { selectedCards, intent } = req.body;
-
     if (!selectedCards || !Array.isArray(selectedCards) || selectedCards.length !== 4 || !intent) {
       return res.status(400).json({ error: 'Invalid request format' });
     }
@@ -41,18 +35,17 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono místico y visionario, pero claro y cercano. No menciones la palabra "carta" ni hagas referencias a tarot. Habla de símbolos, fragmentos o mensajes.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico y visionario, pero cada vez más claro conforme avanza el texto.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      max_tokens: 1000
+      max_tokens: 1200
     });
 
     const result = completion.choices[0].message.content;
-
     res.status(200).json({ synthesis: result });
   } catch (error) {
     console.error('[Codex Error]', error);
@@ -61,22 +54,18 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments.map(f => `Símbolo: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
+  const fragmentDescriptions = fragments.map(f => `Nombre simbólico: ${f.Nombre}\nSignificado: ${f["Mensaje/Interpretación"]}\nSímbolos clave: ${f.Simbolismo}`).join("\n\n");
 
-  return `Un buscador ha recibido 4 fragmentos simbólicos del Codex Hermético con la intención de manifestar: "${intent}".
+  return `Un usuario ha elegido 4 fragmentos del Codex Hermético con la intención de manifestar: "${intent}".
 
-Tu tarea es canalizar un mensaje simbólico y emocionalmente resonante, que una los significados de los fragmentos con el deseo declarado. El texto debe evocar tanto lo místico como lo práctico: tocar el alma, pero también dar claridad sobre lo que debe transformarse para avanzar.
+Tu tarea es canalizar una interpretación profunda e inspiradora que conecte la intención del usuario con los 4 fragmentos seleccionados. El mensaje debe mantener un tono místico, simbólico y alquímico, pero volverse cada vez más claro y aplicable hacia el final.
 
-Evita toda mención a "cartas". Usa "símbolos", "fragmentos", "mensajes" o "sabiduría revelada". No expliques qué representa cada símbolo, sino que integra todo en una interpretación canalizada.
-
-Estructura sugerida:
-1. Apertura personalizada según la intención.
-2. Desarrollo canalizado que integre los fragmentos seleccionados con el deseo profundo del usuario.
-3. Interpretación final integradora.
-4. Cierre dramático con una invitación a tomar una decisión entre dos caminos posibles (sin decir qué son ni describirlos).
+Estructura de la respuesta:
+1. Canalización individual de cada fragmento.
+2. Interpretación holística: cómo se unen los mensajes para guiar al usuario respecto a su intención.
+3. Cierre: una invitación emocional y dramática a elegir entre dos futuros posibles, sin mencionar cartas ni predicciones, apelando a su libre albedrío y a su transformación personal.
 
 Fragmentos seleccionados:
-
 ${fragmentDescriptions}
 
 Intención: ${intent}`;
