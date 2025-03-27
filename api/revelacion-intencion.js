@@ -31,8 +31,7 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID === id);
-      return match;
+      return codexData.find(card => String(card.ID) === String(id));
     });
 
     const prompt = buildPrompt({ fragments: selectedFragments, intent });
@@ -62,7 +61,10 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments.map(f => `Carta: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
+  const fragmentDescriptions = fragments
+    .filter(f => f)
+    .map(f => `Carta: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`)
+    .join("\n\n");
 
   return `Un usuario ha elegido 4 cartas del Codex Hermético con la intención de manifestar: "${intent}".
 
