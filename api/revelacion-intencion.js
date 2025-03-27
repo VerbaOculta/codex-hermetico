@@ -31,7 +31,8 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      return codexData.find(card => String(card.ID) === String(id));
+      const match = codexData.find(card => card.ID === id.toString());
+      return match;
     });
 
     const prompt = buildPrompt({ fragments: selectedFragments, intent });
@@ -41,7 +42,7 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico y visionario.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, inspirador y visionario, pero accesible.'
         },
         {
           role: 'user',
@@ -61,25 +62,17 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments
-    .filter(f => f)
-    .map(f => `Carta: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`)
-    .join("\n\n");
+  const fragmentDescriptions = fragments.map(f => `Carta: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
 
   return `Un usuario ha elegido 4 cartas del Codex Hermético con la intención de manifestar: "${intent}".
 
-Debes canalizar un mensaje simbólico y profundo que integre el mensaje de las 4 cartas con la intención del usuario. El mensaje debe tocar emociones reales (deseos, carencias, miedos, anhelos) vinculadas a esa intención. Luego, dile que dos fragmentos han sido elegidos y que debe tomar una decisión.
+Escribe una canalización poderosa y evocadora que conecte el mensaje de estas 4 cartas con la intención del usuario. El texto debe inspirar y reflejar el proceso interior del buscador. Termina con un llamado dramático a una elección final entre dos cartas, sin explicar sus significados.
 
-Mantén un tono místico, pero más cercano, como si bajaras del plano simbólico a uno más íntimo. Haz referencia directa a la intención y al proceso vivido. Termina con una invitación dramática a elegir.
+Tono: alquímico, místico pero más accesible, como una revelación que desciende a lo humano. Evoca emociones, miedos, deseos y propósito. Cierra con una invitación a una decisión transformadora.
 
 Cartas seleccionadas:
 
 ${fragmentDescriptions}
 
-Intención: ${intent}
-
-Estructura sugerida:
-1. Canalización de las 4 cartas con la intención.
-2. Reflexión profunda.
-3. Invitación a elegir entre 2 cartas sin revelar aún cuáles son.`;
+Intención: ${intent}`;
 }
