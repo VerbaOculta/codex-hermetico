@@ -1,4 +1,4 @@
-// API para síntesis profunda considerando intención y 4 cartas del Codex
+// Nueva API que considera intención y cartas seleccionadas
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID === id);
+      const match = codexData.find(card => card.ID === String(id));
       return match;
     });
 
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico y visionario, pero con claridad emocional.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico y visionario, pero con claridad y conexión emocional.'
         },
         {
           role: 'user',
@@ -53,6 +53,7 @@ export default async function handler(req, res) {
     });
 
     const result = completion.choices[0].message.content;
+
     res.status(200).json({ synthesis: result });
   } catch (error) {
     console.error('[Codex Error]', error);
@@ -63,20 +64,22 @@ export default async function handler(req, res) {
 function buildPrompt({ fragments, intent }) {
   const fragmentDescriptions = fragments.map(f => `Carta: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
 
-  return `Un buscador ha elegido 4 cartas del Codex Hermético con la intención de manifestar: "${intent}".
+  return `Un usuario ha elegido 4 cartas del Codex Hermético con la intención de manifestar: "${intent}".
 
-Tu tarea es canalizar un mensaje profundo y místico que integre el significado simbólico de las 4 cartas con esa intención.
+Debes canalizar un mensaje simbólico y profundo que integre el mensaje de las 4 cartas con la intención del usuario. El mensaje debe tocar emociones reales (deseos, carencias, miedos, anhelos) vinculadas a esa intención.
 
-Estructura de la respuesta:
-1. Interpretación carta por carta, vinculándolas claramente con la intención.
-2. Síntesis global que una las 4 cartas en una interpretación emocionalmente significativa, cercana y poderosa.
-3. Mensaje final que prepare al buscador para una elección crucial entre dos fragmentos, con un tono evocador, sin revelar cuáles.
+Haz una interpretación carta por carta (breve pero significativa), y luego una síntesis holística que conecte todo el mensaje. Finalmente, cierra con una invitación evocadora a elegir entre dos cartas sin revelarlas.
 
-No repitas literalmente el contenido, inspírate en su esencia. Habla en segunda persona. Usa lenguaje simbólico pero accesible. Sé íntimo, sabio y conmovedor.
+Mantén un tono místico pero accesible, conectado con el lenguaje de transformación personal.
 
 Cartas seleccionadas:
 
 ${fragmentDescriptions}
 
-Intención: ${intent}`;
+Intención: ${intent}
+
+Estructura sugerida:
+1. Interpretación de cada carta (breve).
+2. Interpretación holística.
+3. Invitación final a elegir entre 2 caminos.`;
 }
