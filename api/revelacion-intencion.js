@@ -1,4 +1,4 @@
-// API optimizada para síntesis más rápida y clara
+// API optimizada para síntesis más rápida y clara usando GPT-3.5 Turbo
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -37,18 +37,18 @@ export default async function handler(req, res) {
     const prompt = buildPrompt({ fragments: selectedFragments, intent });
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: 'gpt-3.5-turbo',
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Tu estilo es místico pero claro. Nunca menciones nombres de las cartas. Comienza interpretando cada fragmento con belleza, luego haz una síntesis profunda conectando con el deseo del usuario, y finaliza con una invitación a elegir entre dos caminos. Usa un lenguaje emocional pero elegante.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Tu estilo es místico pero claro. Nunca menciones nombres de las cartas. Comienza interpretando cada fragmento con belleza, luego haz una síntesis conectando con el deseo del usuario, y finaliza con una invitación emocional a una elección. Usa un lenguaje elegante, humano y evocador.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      max_tokens: 700
+      max_tokens: 500
     });
 
     const result = completion.choices[0].message.content;
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 function buildPrompt({ fragments, intent }) {
   const descriptions = fragments.map(f => `Mensaje: ${f["Mensaje/Interpretación"]}`).join("\n\n");
 
-  return `El usuario ha elegido estos fragmentos con la intención de manifestar: \"${intent}\". Interprétalos de forma simbólica, conectando con emociones humanas profundas. Luego, haz una integración final y termina con una invitación a elegir uno de dos caminos sin mencionar cartas.
+  return `Un usuario busca manifestar: "${intent}". Interpreta simbólicamente los siguientes fragmentos con un tono místico pero emocionalmente claro. Luego haz una síntesis que conecte profundamente con el deseo del usuario y termina con una invitación a tomar una decisión crucial:
 
-Fragmentos elegidos:\n\n${descriptions}`;
+${descriptions}`;
 }
