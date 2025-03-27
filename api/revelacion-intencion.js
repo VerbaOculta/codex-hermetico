@@ -1,4 +1,4 @@
-// Nueva API que considera intención y cartas seleccionadas
+// Nueva API con interpretación simbólica avanzada para manifestación
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID == id);
+      const match = codexData.find(card => card.ID.toString() === id.toString());
       return match;
     });
 
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico pero accesible, combinando profundidad simbólica con claridad emocional.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico, emocional y profundamente visionario.'
         },
         {
           role: 'user',
@@ -62,21 +62,19 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments.map(f => `Nombre: ${f.Nombre}\nInterpretación: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
+  const fragmentDescriptions = fragments.map(f => `Símbolo: ${f["Mensaje/Interpretación"]}\nSignificado: ${f.Simbolismo}`).join("\n\n");
 
-  return `Un usuario ha elegido 4 fragmentos del Codex Hermético con la intención de manifestar: "${intent}".
+  return `Un buscador ha seleccionado 4 fragmentos simbólicos del Codex Hermético con la intención de manifestar: \"${intent}\".
 
-Debes canalizar una respuesta profunda y personalizada que:
-- Interprete cada uno de los fragmentos desde un enfoque simbólico.
-- Conecte con la intención declarada del usuario.
-- Integre todo en una reflexión final poderosa, sin usar la palabra 'interpretación holística'.
-- Termine con una invitación dramática a elegir entre dos fragmentos, sin revelar cuáles son.
+Tu tarea es canalizar un mensaje simbólico y profundo que integre los significados ocultos de esos 4 fragmentos sin mencionar sus nombres. Refleja cómo estos símbolos se relacionan con el deseo del buscador. 
 
-Mantén un tono místico, cercano y evocador. Usa imágenes simbólicas, pero sin caer en lenguaje críptico. El mensaje debe sentirse revelador y emocionalmente verdadero.
+Cada fragmento puede representar un aspecto del proceso de transformación, aprendizaje, sombra o revelación. La interpretación debe ser evocadora, con lenguaje místico, pero también accesible y emocionalmente resonante.
 
-Fragmentos seleccionados:
+Luego, ofrece una síntesis general que unifique el mensaje completo de los símbolos, conectándolo con la intención manifestada. Esta parte debe sentirse como una comprensión reveladora o una visión más clara del camino del buscador.
 
-${fragmentDescriptions}
+Por último, invita al usuario a tomar una gran decisión, eligiendo entre dos caminos ocultos. No menciones los nombres de los fragmentos restantes ni des pistas visuales. Habla de ellos como \"dos fragmentos\", \"dos caminos\", \"dos símbolos que esperan\". La invitación debe sonar trascendente y dramática, como una bifurcación crucial del alma.
 
-Intención: ${intent}`;
+Mantén el tono místico, elegante, visionario y profundamente conectado al viaje interior del buscador.
+
+Fragmentos seleccionados:\n\n${fragmentDescriptions}`;
 }
