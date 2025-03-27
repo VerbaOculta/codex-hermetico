@@ -1,5 +1,3 @@
-// Nueva API que considera intención y cartas seleccionadas
-
 import { promises as fs } from 'fs';
 import path from 'path';
 import { OpenAI } from 'openai';
@@ -11,13 +9,8 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
     const { selectedCards, intent } = req.body;
@@ -30,10 +23,9 @@ export default async function handler(req, res) {
     const fileContents = await fs.readFile(filePath, 'utf8');
     const codexData = JSON.parse(fileContents);
 
-    const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID === String(id));
-      return match;
-    });
+    const selectedFragments = selectedCards.map((id) =>
+      codexData.find(card => card.ID === String(id))
+    );
 
     if (selectedFragments.some(f => !f)) {
       return res.status(400).json({ error: 'One or more selected cards not found' });
@@ -41,24 +33,31 @@ export default async function handler(req, res) {
 
     const prompt = buildPrompt({ fragments: selectedFragments, intent });
 
-    const completion = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [
         {
           role: 'system',
           content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono místico, pero también claro, equilibrando lo simbólico y lo aplicable. Nunca menciones nombres literales de las cartas.'
         },
-        {
-          role: 'user',
-          content: prompt
-        }
+        { role: 'user', content: prompt }
       ],
+      stream: true,
       max_tokens: 800
     });
 
-    const result = completion.choices[0].message.content;
+    res.writeHead(200, {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Transfer-Encoding': 'chunked'
+    });
 
-    res.status(200).json({ synthesis: result });
+    for await (const chunk of response) {
+      const content = chunk.choices?.[0]?.delta?.content;
+      if (content) res.write(content);
+    }
+
+    res.end();
+
   } catch (error) {
     console.error('[Codex Error]', error);
     res.status(500).json({ error: 'Error generating synthesis' });
