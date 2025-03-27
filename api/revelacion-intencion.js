@@ -1,4 +1,4 @@
-// API optimizada para síntesis más rápida y clara usando GPT-3.5 Turbo
+// API optimizada para síntesis más rápida y clara
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -41,14 +41,14 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Tu estilo es místico pero claro. Nunca menciones nombres de las cartas. Comienza interpretando cada fragmento con belleza, luego haz una síntesis conectando con el deseo del usuario, y finaliza con una invitación emocional a una elección. Usa un lenguaje elegante, humano y evocador.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Tu estilo es místico pero claro. Nunca menciones nombres de las cartas. Comienza interpretando cada fragmento con belleza, luego haz una síntesis profunda conectando con el deseo del usuario, y finaliza con una invitación a elegir entre dos caminos. Usa un lenguaje emocional pero elegante.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      max_tokens: 500
+      max_tokens: 700
     });
 
     const result = completion.choices[0].message.content;
@@ -61,9 +61,19 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const descriptions = fragments.map(f => `Mensaje: ${f["Mensaje/Interpretación"]}`).join("\n\n");
+  const descriptions = fragments.map((f, i) => `Fragmento ${i + 1}: ${f["Mensaje/Interpretación"]}`).join("\n\n");
 
-  return `Un usuario busca manifestar: "${intent}". Interpreta simbólicamente los siguientes fragmentos con un tono místico pero emocionalmente claro. Luego haz una síntesis que conecte profundamente con el deseo del usuario y termina con una invitación a tomar una decisión crucial:
+  return `Eres un intérprete simbólico del Codex Hermético. El usuario ha elegido estos cuatro fragmentos con la intención de manifestar: \"${intent}\".
+
+Haz lo siguiente:
+
+1. Interpreta cada uno de los cuatro fragmentos individualmente, con un tono místico pero claro. Evoca imágenes simbólicas, emociones humanas profundas y reflexiones espirituales. No menciones los nombres de las cartas.
+
+2. Luego haz una interpretación holística: integra el mensaje completo de los cuatro fragmentos en relación con la intención del usuario, revelando un mensaje poderoso, práctico y transformador.
+
+3. Termina con una invitación final: presenta dos caminos (sin mencionar cartas), como una decisión crucial que el usuario debe tomar para avanzar. Despierta curiosidad, emoción y una sensación de destino.
+
+Fragmentos elegidos:
 
 ${descriptions}`;
 }
