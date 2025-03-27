@@ -1,4 +1,4 @@
-// Nueva API que considera intención y cartas seleccionadas
+// API para síntesis profunda considerando intención y 4 cartas del Codex
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID === id.toString());
+      const match = codexData.find(card => card.ID === id);
       return match;
     });
 
@@ -42,18 +42,17 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, inspirador y visionario, pero accesible.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico y visionario, pero con claridad emocional.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      max_tokens: 1000
+      max_tokens: 1200
     });
 
     const result = completion.choices[0].message.content;
-
     res.status(200).json({ synthesis: result });
   } catch (error) {
     console.error('[Codex Error]', error);
@@ -64,11 +63,16 @@ export default async function handler(req, res) {
 function buildPrompt({ fragments, intent }) {
   const fragmentDescriptions = fragments.map(f => `Carta: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
 
-  return `Un usuario ha elegido 4 cartas del Codex Hermético con la intención de manifestar: "${intent}".
+  return `Un buscador ha elegido 4 cartas del Codex Hermético con la intención de manifestar: "${intent}".
 
-Escribe una canalización poderosa y evocadora que conecte el mensaje de estas 4 cartas con la intención del usuario. El texto debe inspirar y reflejar el proceso interior del buscador. Termina con un llamado dramático a una elección final entre dos cartas, sin explicar sus significados.
+Tu tarea es canalizar un mensaje profundo y místico que integre el significado simbólico de las 4 cartas con esa intención.
 
-Tono: alquímico, místico pero más accesible, como una revelación que desciende a lo humano. Evoca emociones, miedos, deseos y propósito. Cierra con una invitación a una decisión transformadora.
+Estructura de la respuesta:
+1. Interpretación carta por carta, vinculándolas claramente con la intención.
+2. Síntesis global que una las 4 cartas en una interpretación emocionalmente significativa, cercana y poderosa.
+3. Mensaje final que prepare al buscador para una elección crucial entre dos fragmentos, con un tono evocador, sin revelar cuáles.
+
+No repitas literalmente el contenido, inspírate en su esencia. Habla en segunda persona. Usa lenguaje simbólico pero accesible. Sé íntimo, sabio y conmovedor.
 
 Cartas seleccionadas:
 
