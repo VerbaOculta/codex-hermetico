@@ -1,3 +1,5 @@
+// API optimizada para síntesis más rápida y clara
+
 import { promises as fs } from 'fs';
 import path from 'path';
 import { OpenAI } from 'openai';
@@ -23,9 +25,10 @@ export default async function handler(req, res) {
     const fileContents = await fs.readFile(filePath, 'utf8');
     const codexData = JSON.parse(fileContents);
 
-    const selectedFragments = selectedCards.map((id) =>
-      codexData.find(card => card.ID === String(id))
-    );
+    const selectedFragments = selectedCards.map((id) => {
+      const match = codexData.find(card => card.ID === String(id));
+      return match;
+    });
 
     if (selectedFragments.some(f => !f)) {
       return res.status(400).json({ error: 'One or more selected cards not found' });
@@ -33,31 +36,24 @@ export default async function handler(req, res) {
 
     const prompt = buildPrompt({ fragments: selectedFragments, intent });
 
-    const response = await openai.chat.completions.create({
+    const completion = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono místico, pero también claro, equilibrando lo simbólico y lo aplicable. Nunca menciones nombres literales de las cartas.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Tu estilo es místico pero claro. Nunca menciones nombres de las cartas. Comienza interpretando cada fragmento con belleza, luego haz una síntesis profunda conectando con el deseo del usuario, y finaliza con una invitación a elegir entre dos caminos. Usa un lenguaje emocional pero elegante.'
         },
-        { role: 'user', content: prompt }
+        {
+          role: 'user',
+          content: prompt
+        }
       ],
-      stream: true,
-      max_tokens: 800
+      max_tokens: 700
     });
 
-    res.writeHead(200, {
-      'Content-Type': 'text/plain; charset=utf-8',
-      'Transfer-Encoding': 'chunked'
-    });
+    const result = completion.choices[0].message.content;
 
-    for await (const chunk of response) {
-      const content = chunk.choices?.[0]?.delta?.content;
-      if (content) res.write(content);
-    }
-
-    res.end();
-
+    res.status(200).json({ synthesis: result });
   } catch (error) {
     console.error('[Codex Error]', error);
     res.status(500).json({ error: 'Error generating synthesis' });
@@ -65,11 +61,9 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments.map(f => `Fragmento simbólico:\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
+  const descriptions = fragments.map(f => `Mensaje: ${f["Mensaje/Interpretación"]}`).join("\n\n");
 
-  return `Un usuario ha elegido 4 fragmentos simbólicos con la intención de manifestar: "${intent}".
+  return `El usuario ha elegido estos fragmentos con la intención de manifestar: \"${intent}\". Interprétalos de forma simbólica, conectando con emociones humanas profundas. Luego, haz una integración final y termina con una invitación a elegir uno de dos caminos sin mencionar cartas.
 
-Canaliza un mensaje profundo que interprete los 4 fragmentos sin mencionar sus nombres, e intégralo con la intención del usuario. Habla con un tono místico pero claro, haciendo referencias a anhelos reales como miedo, deseo, carencia, aspiración. Después de interpretar uno a uno, ofrece una síntesis integradora que conecte todo. Finalmente, haz una invitación dramática a elegir entre dos caminos sin mencionar cartas.
-
-Fragmentos elegidos:\n\n${fragmentDescriptions}\n\nIntención del usuario: ${intent}`;
+Fragmentos elegidos:\n\n${descriptions}`;
 }
