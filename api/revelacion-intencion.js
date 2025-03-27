@@ -31,8 +31,7 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID === String(id));
-      return match;
+      return codexData.find(card => card.ID.toString() === id.toString());
     });
 
     const prompt = buildPrompt({ fragments: selectedFragments, intent });
@@ -42,14 +41,14 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico y visionario, pero con claridad y conexión emocional.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono místico y visionario, pero claro y cercano. No menciones la palabra "carta" ni hagas referencias a tarot. Habla de símbolos, fragmentos o mensajes.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      max_tokens: 1200
+      max_tokens: 1000
     });
 
     const result = completion.choices[0].message.content;
@@ -62,24 +61,23 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments.map(f => `Carta: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
+  const fragmentDescriptions = fragments.map(f => `Símbolo: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`).join("\n\n");
 
-  return `Un usuario ha elegido 4 cartas del Codex Hermético con la intención de manifestar: "${intent}".
+  return `Un buscador ha recibido 4 fragmentos simbólicos del Codex Hermético con la intención de manifestar: "${intent}".
 
-Debes canalizar un mensaje simbólico y profundo que integre el mensaje de las 4 cartas con la intención del usuario. El mensaje debe tocar emociones reales (deseos, carencias, miedos, anhelos) vinculadas a esa intención.
+Tu tarea es canalizar un mensaje simbólico y emocionalmente resonante, que una los significados de los fragmentos con el deseo declarado. El texto debe evocar tanto lo místico como lo práctico: tocar el alma, pero también dar claridad sobre lo que debe transformarse para avanzar.
 
-Haz una interpretación carta por carta (breve pero significativa), y luego una síntesis holística que conecte todo el mensaje. Finalmente, cierra con una invitación evocadora a elegir entre dos cartas sin revelarlas.
+Evita toda mención a "cartas". Usa "símbolos", "fragmentos", "mensajes" o "sabiduría revelada". No expliques qué representa cada símbolo, sino que integra todo en una interpretación canalizada.
 
-Mantén un tono místico pero accesible, conectado con el lenguaje de transformación personal.
+Estructura sugerida:
+1. Apertura personalizada según la intención.
+2. Desarrollo canalizado que integre los fragmentos seleccionados con el deseo profundo del usuario.
+3. Interpretación final integradora.
+4. Cierre dramático con una invitación a tomar una decisión entre dos caminos posibles (sin decir qué son ni describirlos).
 
-Cartas seleccionadas:
+Fragmentos seleccionados:
 
 ${fragmentDescriptions}
 
-Intención: ${intent}
-
-Estructura sugerida:
-1. Interpretación de cada carta (breve).
-2. Interpretación holística.
-3. Invitación final a elegir entre 2 caminos.`;
+Intención: ${intent}`;
 }
