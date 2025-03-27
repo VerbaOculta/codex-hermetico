@@ -1,4 +1,4 @@
-// Nueva API con interpretación simbólica avanzada para manifestación
+// Backend con GPT-4 para canalización profunda
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -11,13 +11,8 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
     const { selectedCards, intent } = req.body;
@@ -30,30 +25,26 @@ export default async function handler(req, res) {
     const fileContents = await fs.readFile(filePath, 'utf8');
     const codexData = JSON.parse(fileContents);
 
-    const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID.toString() === id.toString());
-      return match;
-    });
+    const selectedFragments = selectedCards.map((id) => codexData.find(card => card.ID === id.toString()));
 
     const prompt = buildPrompt({ fragments: selectedFragments, intent });
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4',
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico, emocional y profundamente visionario.'
+          content: 'Eres un canalizador del Codex Hermético. Escribe con un tono alquímico, evocador y simbólico, pero claro y emocionalmente significativo. Evita mencionar los nombres literales de los fragmentos o "cartas". Usa lenguaje visual y místico, pero sin que sea críptico o confuso.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      max_tokens: 1000
+      max_tokens: 1200
     });
 
     const result = completion.choices[0].message.content;
-
     res.status(200).json({ synthesis: result });
   } catch (error) {
     console.error('[Codex Error]', error);
@@ -62,19 +53,22 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments.map(f => `Símbolo: ${f["Mensaje/Interpretación"]}\nSignificado: ${f.Simbolismo}`).join("\n\n");
+  const fragmentDescriptions = fragments.map((f, i) => {
+    return `Fragmento ${i + 1}:
+Significado: ${f["Mensaje/Interpretación"]}
+Simbolismo: ${f.Simbolismo}`;
+  }).join("\n\n");
 
-  return `Un buscador ha seleccionado 4 fragmentos simbólicos del Codex Hermético con la intención de manifestar: \"${intent}\".
+  return `Un buscador ha manifestado su intención de trabajar con el tema: "${intent}".
 
-Tu tarea es canalizar un mensaje simbólico y profundo que integre los significados ocultos de esos 4 fragmentos sin mencionar sus nombres. Refleja cómo estos símbolos se relacionan con el deseo del buscador. 
+Ha recibido 4 fragmentos simbólicos del Codex Hermético. A partir de sus significados y simbolismos, debes canalizar una interpretación mística y significativa.
 
-Cada fragmento puede representar un aspecto del proceso de transformación, aprendizaje, sombra o revelación. La interpretación debe ser evocadora, con lenguaje místico, pero también accesible y emocionalmente resonante.
+Primero, haz una interpretación de cada uno de los fragmentos por separado.
+Luego, ofrece una síntesis global que integre todos los fragmentos con la intención, como si fuera una lectura reveladora y personalizada.
 
-Luego, ofrece una síntesis general que unifique el mensaje completo de los símbolos, conectándolo con la intención manifestada. Esta parte debe sentirse como una comprensión reveladora o una visión más clara del camino del buscador.
+Finaliza con un mensaje de elección: dile al usuario que hay dos caminos posibles, sin describirlos, y que debe elegir con sabiduría. Usa un tono que refuerce el sentido de destino, misterio y responsabilidad interior.
 
-Por último, invita al usuario a tomar una gran decisión, eligiendo entre dos caminos ocultos. No menciones los nombres de los fragmentos restantes ni des pistas visuales. Habla de ellos como \"dos fragmentos\", \"dos caminos\", \"dos símbolos que esperan\". La invitación debe sonar trascendente y dramática, como una bifurcación crucial del alma.
+${fragmentDescriptions}
 
-Mantén el tono místico, elegante, visionario y profundamente conectado al viaje interior del buscador.
-
-Fragmentos seleccionados:\n\n${fragmentDescriptions}`;
+Recuerda: no menciones los nombres literales de las cartas. No uses un lenguaje críptico. La experiencia debe ser mística pero comprensible, simbólica pero clara. Tu respuesta guía una experiencia alquímica y emocional.`;
 }
