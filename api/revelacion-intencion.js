@@ -1,4 +1,4 @@
-// API optimizada del Codex Hermético con GPT-3.5 (versión mejorada)
+// API mejorada con interpretación personalizada y cierre dramático
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -11,8 +11,13 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
   try {
     const { selectedCards, intent } = req.body;
@@ -26,7 +31,7 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => String(card.ID) === String(id));
+      const match = codexData.find(card => card.ID.toString() === id.toString());
       return match;
     });
 
@@ -37,14 +42,14 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un guía místico y alquímico. Escribe de forma simbólica, poética y clara, sin mencionar el nombre de las cartas, y sin comparaciones con el tarot. Evoca transformación interior y sabiduría universal con un lenguaje accesible pero elevado.'
+          content: 'Eres un intérprete simbólico del Codex Hermético. Escribe con un tono alquímico, místico y visionario. Habla con belleza, pero entrega claridad emocional. No menciones cartas ni nombres explícitos.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      max_tokens: 1200
+      max_tokens: 1000
     });
 
     const result = completion.choices[0].message.content;
@@ -57,22 +62,21 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({ fragments, intent }) {
-  const fragmentDescriptions = fragments.map((f, i) => `Fragmento ${i + 1} →\nSímbolos: ${f.Simbolismo}\nInterpretación: ${f["Mensaje/Interpretación"]}`).join("\n\n");
+  const fragmentDescriptions = fragments.map(f => `Símbolo: ${f["Mensaje/Interpretación"]}\n\nSignificado: ${f.Simbolismo}`).join("\n\n");
 
-  return `Un buscador ha manifestado la intención de transformar su vida a través del camino de: "${intent}". Ha recibido 4 fragmentos del Codex Hermético.
+  return `Un usuario ha elegido 4 fragmentos del Codex Hermético con la intención de manifestar: "${intent}".
 
-Tu tarea es canalizar una revelación profunda que conecte los símbolos y mensajes de esos fragmentos con la intención declarada. Utiliza un lenguaje que inspire, que toque el deseo, el anhelo, el miedo y la transformación.
+Canaliza un mensaje simbólico, místico y emocional que integre estos fragmentos con la intención. El lenguaje debe evocar claridad interior, resonancia espiritual y transformación real. No menciones nombres ni "cartas". 
 
-Estructura del mensaje:
-1. Descripción canalizada de cada fragmento sin mencionar que son cartas (usa "símbolo", "figura", "mensaje", "principio").
-2. Una reflexión integradora que conecte los mensajes con la intención del usuario.
-3. Un cierre dramático e inspirador: dile que dos fragmentos lo esperan para revelar el siguiente peldaño de su camino. No reveles aún cuáles son. Habla de una decisión que solo el alma puede tomar.
+Incluye:
+1. Una breve introducción conectando al usuario con su intención.
+2. Una interpretación profunda de cada fragmento (en lenguaje universal, sin títulos).
+3. Una síntesis final que unifique el mensaje de los 4 símbolos.
+4. Un cierre dramático que le plantee al usuario una elección: algo está por revelarse, y debe escoger entre dos caminos. Haz esta invitación con poder y belleza.
 
-Evita en todo momento mencionar la palabra "carta" o "tarot". Esta experiencia es única y sagrada.
-
-Fragmentos recibidos:
+Fragmentos:
 
 ${fragmentDescriptions}
 
-Intención declarada: ${intent}`;
+Intención: ${intent}`;
 }
