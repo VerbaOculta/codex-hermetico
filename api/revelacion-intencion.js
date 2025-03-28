@@ -1,19 +1,18 @@
-// archivo: routes/revelacion-intencion.js
-
-import express from 'express';
 import { OpenAI } from 'openai';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-const router = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
- router.post('/', async (req, res) => {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Método no permitido' });
+  }
+
   const { selectedCards, intent } = req.body;
 
   if (!selectedCards || !intent) {
@@ -25,7 +24,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const fileContents = await fs.readFile(filePath, 'utf8');
     const codexData = JSON.parse(fileContents);
 
-    const selectedFragments = selectedCards.map((id, index) => {
+    const selectedFragments = selectedCards.map((id) => {
       const match = codexData.find(card => card.ID === id);
       return match ? `${match.Nombre}: ${match.Simbolismo}` : `Fragmento ${id}: símbolo desconocido`;
     });
@@ -74,6 +73,4 @@ ${intent}`;
     console.error('[Codex Error] /api/revelacion-intencion', error);
     res.status(500).json({ error: 'Error generando la interpretación final.' });
   }
-});
-
-export default router;
+}
