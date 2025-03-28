@@ -1,79 +1,75 @@
-// API optimizada para síntesis más rápida y clara
+// archivo: routes/revelacion-intencion.js
 
-import { promises as fs } from 'fs';
-import path from 'path';
-import { OpenAI } from 'openai';
+const express = require('express');
+const router = express.Router();
+const { OpenAI } = require('openai');
+const fs = require('fs/promises');
+const path = require('path');
 
+// Configura tu instancia con tu API key
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+router.post('/', async (req, res) => {
+  const { selectedCards, intent } = req.body;
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!selectedCards || !intent) {
+    return res.status(400).json({ error: 'Faltan datos: selectedCards o intent' });
+  }
 
   try {
-    const { selectedCards, intent } = req.body;
-
-    if (!selectedCards || !Array.isArray(selectedCards) || selectedCards.length !== 4 || !intent) {
-      return res.status(400).json({ error: 'Invalid request format' });
-    }
-
     const filePath = path.join(process.cwd(), 'data', 'codex-hermetico.json');
     const fileContents = await fs.readFile(filePath, 'utf8');
     const codexData = JSON.parse(fileContents);
 
-    const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID === String(id));
-      return match;
+    const selectedFragments = selectedCards.map((id, index) => {
+      const match = codexData.find(card => card.ID === id);
+      return match ? `${match.Nombre}: ${match.Simbolismo}` : `Fragmento ${id}: símbolo desconocido`;
     });
 
-    if (selectedFragments.some(f => !f)) {
-      return res.status(400).json({ error: 'One or more selected cards not found' });
-    }
+    const prompt = `
+El usuario ha elegido 4 cartas del Codex Hermético, cada una representa un símbolo arquetípico. También ha manifestado una intención de vida, como "abundancia", "transformación interior", "propósito", etc.
 
-    const prompt = buildPrompt({ fragments: selectedFragments, intent });
+Tu tarea es escribir una interpretación completa, profunda y práctica que conecte simbólicamente los 4 fragmentos seleccionados. Debes interpretar cada uno de ellos, integrando sus significados de forma fluida en una sola narrativa continua. No enumeres los fragmentos ni uses encabezados. Haz que sus ideas aparezcan claramente, como imágenes y reflexiones entrelazadas.
+
+Esta interpretación debe resonar con la intención del usuario (ej: ${intent}), sin repetirla constantemente. Usa un lenguaje claro, elegante, evocador y con ritmo, pero sin exageraciones ni misticismo innecesario.
+
+Una vez interpretados e integrados los cuatro fragmentos, concluye con una invitación introspectiva: el lector debe elegir entre dos caminos simbólicos. Uno representa el movimiento hacia afuera (acción, expansión), el otro representa la exploración interior (escucha, contemplación). No uses listas ni lo hagas explícito. Transmítelo como una decisión simbólica y personal.
+
+---
+
+Fragmentos seleccionados:
+
+1. ${selectedFragments[0]}
+2. ${selectedFragments[1]}
+3. ${selectedFragments[2]}
+4. ${selectedFragments[3]}
+
+Intención manifestada:
+${intent}`;
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
+      temperature: 0.85,
+      max_tokens: 650,
       messages: [
         {
           role: 'system',
-          content: 'Eres un intérprete simbólico del Codex Hermético. Tu estilo es místico pero claro. Nunca menciones nombres de las cartas. Comienza interpretando cada fragmento con belleza, luego haz una síntesis profunda conectando con el deseo del usuario, y finaliza con una invitación a elegir entre dos caminos. Usa un lenguaje emocional pero elegante.'
+          content: 'Eres un mentor alquímico práctico que interpreta símbolos del Codex Hermético en tono claro, inspirador y significativo.'
         },
         {
           role: 'user',
-          content: prompt
+          content: prompt.trim()
         }
-      ],
-      max_tokens: 700
+      ]
     });
 
-    const result = completion.choices[0].message.content;
+    const synthesis = completion.choices[0]?.message?.content?.trim();
+    res.status(200).json({ synthesis });
 
-    res.status(200).json({ synthesis: result });
   } catch (error) {
-    console.error('[Codex Error]', error);
-    res.status(500).json({ error: 'Error generating synthesis' });
+    console.error('[Codex Error] /api/revelacion-intencion', error);
+    res.status(500).json({ error: 'Error generando la interpretación final.' });
   }
-}
+});
 
-function buildPrompt({ fragments, intent }) {
-  const descriptions = fragments.map((f, i) => `Fragmento ${i + 1}: ${f["Mensaje/Interpretación"]}`).join("\n\n");
-
-  return `Eres un intérprete simbólico del Codex Hermético. El usuario ha elegido estos cuatro fragmentos con la intención de manifestar: \"${intent}\".
-
-Haz lo siguiente:
-
-1. Interpreta cada uno de los cuatro fragmentos individualmente, con un tono místico pero claro. Evoca imágenes simbólicas, emociones humanas profundas y reflexiones espirituales. No menciones los nombres de las cartas.
-
-2. Luego haz una interpretación holística: integra el mensaje completo de los cuatro fragmentos en relación con la intención del usuario, revelando un mensaje poderoso, práctico y transformador.
-
-3. Termina con una invitación final: presenta dos caminos (sin mencionar cartas), como una decisión crucial que el usuario debe tomar para avanzar. Despierta curiosidad, emoción y una sensación de destino.
-
-Fragmentos elegidos:
-
-${descriptions}`;
-}
+module.exports = router;
