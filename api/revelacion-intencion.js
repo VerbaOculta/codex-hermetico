@@ -1,15 +1,19 @@
 // archivo: routes/revelacion-intencion.js
 
-const express = require('express');
-const router = express.Router();
-const { OpenAI } = require('openai');
-const fs = require('fs/promises');
-const path = require('path');
+import express from 'express';
+import { OpenAI } from 'openai';
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Configura tu instancia con tu API key
+const router = express.Router();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-router.post('/', async (req, res) => {
+ router.post('/', async (req, res) => {
   const { selectedCards, intent } = req.body;
 
   if (!selectedCards || !intent) {
