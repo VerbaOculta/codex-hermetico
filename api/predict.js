@@ -55,7 +55,7 @@ export default async function handler(req, res) {
     
     });
 
-    console.error('Promot', completion.choices[0].message.content);
+    console.error('Promot', prompt);
     const response = completion.choices[0].message.content;
     res.status(200).json({ prediction: response });
   } catch (error) {
