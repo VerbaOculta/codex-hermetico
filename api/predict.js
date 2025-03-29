@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id, index) => {
-      const match = codexData.find(card => card.ID === id);
+      const match = codexData.find(card => String(card.ID) === String(id));
       return {
         position: positions[index],
         ...match
@@ -52,12 +52,12 @@ export default async function handler(req, res) {
         }
       ],
       max_tokens: 1000
-    
     });
 
-    console.error('Promot', prompt);
+    console.error('Prompt', prompt);
     const response = completion.choices[0].message.content;
     res.status(200).json({ prediction: response });
+
   } catch (error) {
     console.error('[Codex API Error]', error);
     res.status(500).json({ error: 'Error generating prediction', details: error.message });
@@ -73,7 +73,7 @@ function buildPrompt(fragments) {
   };
 
   const lines = fragments.map(f => {
-    return `${positionTitles[f.position]}\nCarta: ${f.Nombre}\nMensaje: ${f['Mensaje/Interpretación']}\nSimbolismo: ${f.Simbolismo}`;
+    return `${positionTitles[f.position]}\nCarta: ${f.Nombre}\nMensaje: ${f["Mensaje/Interpretación"]}\nSimbolismo: ${f.Simbolismo}`;
   });
 
   return `Eres un intérprete del Codex Hermético. Tu misión es descifrar fragmentos simbólicos entregados por el buscador, en cuatro posiciones rituales. A partir de ellos, genera una lectura mística, alquímica y poética.
