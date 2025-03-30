@@ -2,13 +2,11 @@
   "functions": {
     "api/predict.js": {
       "memory": 3000,
-      "maxDuration": 15,
-      "regions": ["gru1"]
+      "maxDuration": 15
     },
     "api/revelacion-intencion.js": {
       "memory": 3000,
-      "maxDuration": 15,
-      "regions": ["gru1"]
+      "maxDuration": 15
     }
   }
 }
