@@ -9,18 +9,15 @@ const __dirname = path.dirname(__filename);
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function handler(req, res) {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return res.status(200).end();
+  }
 
-
-
-if (req.method === 'OPTIONS') {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  return res.status(200).end();
-}
 
-res.setHeader('Access-Control-Allow-Origin', '*');
-  
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
@@ -37,8 +34,10 @@ res.setHeader('Access-Control-Allow-Origin', '*');
     const codexData = JSON.parse(fileContents);
 
     const selectedFragments = selectedCards.map((id) => {
-      const match = codexData.find(card => card.ID === id);
-      return match ? `${match.Nombre}: ${match.Simbolismo}` : `Fragmento ${id}: símbolo desconocido`;
+      const match = codexData.find(card => String(card.ID) === String(id));
+      return match
+        ? `${match.Nombre} — ${match["Mensaje/Interpretación"]}`
+        : `Fragmento ${id}: símbolo desconocido`;
     });
 
     const prompt = `
