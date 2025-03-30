@@ -76,8 +76,7 @@ ${intent}`;
         }
       ]
     });
-
-    console.error('Prompt', prompt.trim());
+    
     const synthesis = completion.choices[0]?.message?.content?.trim();
     res.status(200).json({ synthesis });
 
