@@ -1,4 +1,3 @@
-
 import { OpenAI } from 'openai';
 import fs from 'fs/promises';
 import path from 'path';
@@ -41,25 +40,7 @@ export default async function handler(req, res) {
         : `Fragmento ${id}: símbolo desconocido`;
     });
 
-    const prompt = `
-Has recibido cuatro fragmentos del Codex Hermético.
-Cada uno lleva consigo un principio ancestral que vibra con tu búsqueda interior.
-
-Tu intención declarada es: **${intent}**
-
-A partir de esta intención, y considerando estos fragmentos:
-
-- ${selectedFragments[0]}
-- ${selectedFragments[1]}
-- ${selectedFragments[2]}
-- ${selectedFragments[3]}
-
-...canaliza una guía profunda, simbólica y transformadora. No expliques carta por carta. Entrelaza su esencia en una sola reflexión que hable al alma del buscador. Usa un lenguaje evocador, con ritmo y resonancia, que invite a la introspección.
-
-Puedes destacar con color dorado las palabras clave si es coherente. Si algún símbolo (☉ ☽ 🜁 🜃 🜄 🜂 ⚶ 🜔) resuena con el mensaje, incorpóralo de forma sutil.
-
-Concluye con un susurro alquímico que invite al lector a elegir su siguiente paso, sin decirlo explícitamente.
-`;
+    const prompt = `Has recibido cuatro fragmentos del Codex Hermético.\nCada uno lleva consigo un principio ancestral que vibra con tu búsqueda interior.\n\nTu intención declarada es: **${intent}**\n\nA partir de esta intención, y considerando estos fragmentos:\n\n- ${selectedFragments[0]}\n- ${selectedFragments[1]}\n- ${selectedFragments[2]}\n- ${selectedFragments[3]}\n\n...canaliza una guía profunda, simbólica y transformadora. No expliques carta por carta. Entrelaza su esencia en una sola reflexión que hable al alma del buscador. Usa un lenguaje evocador, con ritmo y resonancia, que invite a la introspección.\n\nPuedes destacar con color dorado las palabras clave si es coherente. Si algún símbolo (☉ ☽ 🜁 🜃 🜄 🜂 ⚶ 🜔) resuena con el mensaje, incorpóralo de forma sutil.\n\nConcluye con un susurro alquímico que invite al lector a elegir su siguiente paso, sin decirlo explícitamente.\n\nFormatea la respuesta como HTML. Cada párrafo debe ir dentro de un <p>. Las palabras importantes puedes envolverlas en <span class='dorado'>palabra</span>.`;
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
@@ -68,7 +49,7 @@ Concluye con un susurro alquímico que invite al lector a elegir su siguiente pa
       messages: [
         {
           role: 'system',
-          content: 'Eres un mentor alquímico práctico que interpreta símbolos del Codex Hermético en tono claro, inspirador y significativo. Formatea palabras clave con <span class="dorado"> cuando corresponda.'
+          content: 'Eres un mentor alquímico práctico que interpreta símbolos del Codex Hermético en tono claro, inspirador y significativo. Siempre entregas respuestas en formato HTML, usando <p> y <span class=\'dorado\'> para dar vida al mensaje.'
         },
         {
           role: 'user',
