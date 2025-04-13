@@ -77,6 +77,7 @@ Concluye con un susurro alquímico que invite al lector a elegir su siguiente pa
       ]
     });
 
+    console.log("[DEBUG] Prompt generado:", prompt);
     const synthesis = completion.choices[0]?.message?.content?.trim();
     res.status(200).json({ synthesis });
 
