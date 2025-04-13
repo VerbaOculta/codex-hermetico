@@ -40,26 +40,29 @@ export default async function handler(req, res) {
         : `Fragmento ${id}: símbolo desconocido`;
     });
 
-    const prompt = `
-El usuario ha elegido 4 cartas del Codex Hermético, cada una representa un símbolo arquetípico. También ha manifestado una intención de vida, como "abundancia", "transformación interior", "propósito", etc.
+    const prompt = \`
+El usuario ha elegido 4 fragmentos del Codex Hermético y ha manifestado una intención profunda como "abundancia", "transformación interior", "propósito", etc.
 
-Tu tarea es escribir una interpretación completa, profunda y práctica que conecte simbólicamente los 4 fragmentos seleccionados. Debes interpretar cada uno de ellos, integrando sus significados de forma fluida en una sola narrativa continua. No enumeres los fragmentos ni uses encabezados. Haz que sus ideas aparezcan claramente, como imágenes y reflexiones entrelazadas.
+Tu tarea es canalizar una interpretación **integrada, evocadora y centrada en su búsqueda interior**. No es necesario interpretar fragmento por fragmento; en cambio, **tejer una narrativa simbólica** en torno a lo que esa selección revela sobre el camino del alma del usuario.
 
-Esta interpretación debe resonar con la intención del usuario (ej: ${intent}), sin repetirla constantemente. Usa un lenguaje claro, elegante, evocador y con ritmo, pero sin exageraciones ni misticismo innecesario.
+- **No enumeres las cartas.** Usa su esencia como guía poética para revelar una visión más profunda.
+- **Destaca palabras clave** con etiquetas HTML como: <span class="dorado">sabiduría</span>, <span class="dorado">transmutación</span>, <span class="dorado">origen</span>, etc.
+- Puedes incluir **símbolos alquímicos o sagrados** (☉ ☽ 🜂 🜁 🜄 🜃 ✴︎ ✧ ⟁) si surgen de forma natural.
+- El tono debe ser **claro, introspectivo, elegante y simbólico**. Evita el lenguaje exagerado o místico sin propósito.
+- No uses listas ni secciones. Es una interpretación fluida y profunda.
 
-Una vez interpretados e integrados los cuatro fragmentos, concluye con una invitación introspectiva: el lector debe elegir entre dos caminos simbólicos. Uno representa el movimiento hacia afuera (acción, expansión), el otro representa la exploración interior (escucha, contemplación). No uses listas ni lo hagas explícito. Transmítelo como una decisión simbólica y personal.
-
----
+Termina la interpretación con una **invitación simbólica y personal** a elegir uno de dos caminos: uno hacia la **acción externa** (manifestación, expansión) y otro hacia la **exploración interior** (silencio, contemplación). No los nombres así, solo sugiérelos como un eco en su alma.
 
 Fragmentos seleccionados:
 
-1. ${selectedFragments[0]}
-2. ${selectedFragments[1]}
-3. ${selectedFragments[2]}
-4. ${selectedFragments[3]}
+1. \${selectedFragments[0]}
+2. \${selectedFragments[1]}
+3. \${selectedFragments[2]}
+4. \${selectedFragments[3]}
 
 Intención manifestada:
-${intent}`;
+\${intent}
+\`;
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
@@ -68,7 +71,7 @@ ${intent}`;
       messages: [
         {
           role: 'system',
-          content: 'Eres un mentor alquímico práctico que interpreta símbolos del Codex Hermético en tono claro, inspirador y significativo.'
+          content: 'Eres un mentor simbólico y alquímico. Tu lenguaje es claro, rítmico y profundamente inspirador. Interpretas símbolos antiguos con el corazón abierto, invitando al usuario a descubrir su verdad interior sin imponerla.'
         },
         {
           role: 'user',
@@ -76,7 +79,7 @@ ${intent}`;
         }
       ]
     });
-    
+
     const synthesis = completion.choices[0]?.message?.content?.trim();
     res.status(200).json({ synthesis });
 
