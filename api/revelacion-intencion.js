@@ -1,3 +1,4 @@
+
 import { OpenAI } from 'openai';
 import fs from 'fs/promises';
 import path from 'path';
@@ -40,29 +41,25 @@ export default async function handler(req, res) {
         : `Fragmento ${id}: símbolo desconocido`;
     });
 
-    const prompt = \`
-El usuario ha elegido 4 fragmentos del Codex Hermético y ha manifestado una intención profunda como "abundancia", "transformación interior", "propósito", etc.
+    const prompt = `
+Has recibido cuatro fragmentos del Codex Hermético.
+Cada uno lleva consigo un principio ancestral que vibra con tu búsqueda interior.
 
-Tu tarea es canalizar una interpretación **integrada, evocadora y centrada en su búsqueda interior**. No es necesario interpretar fragmento por fragmento; en cambio, **tejer una narrativa simbólica** en torno a lo que esa selección revela sobre el camino del alma del usuario.
+Tu intención declarada es: **${intent}**
 
-- **No enumeres las cartas.** Usa su esencia como guía poética para revelar una visión más profunda.
-- **Destaca palabras clave** con etiquetas HTML como: <span class="dorado">sabiduría</span>, <span class="dorado">transmutación</span>, <span class="dorado">origen</span>, etc.
-- Puedes incluir **símbolos alquímicos o sagrados** (☉ ☽ 🜂 🜁 🜄 🜃 ✴︎ ✧ ⟁) si surgen de forma natural.
-- El tono debe ser **claro, introspectivo, elegante y simbólico**. Evita el lenguaje exagerado o místico sin propósito.
-- No uses listas ni secciones. Es una interpretación fluida y profunda.
+A partir de esta intención, y considerando estos fragmentos:
 
-Termina la interpretación con una **invitación simbólica y personal** a elegir uno de dos caminos: uno hacia la **acción externa** (manifestación, expansión) y otro hacia la **exploración interior** (silencio, contemplación). No los nombres así, solo sugiérelos como un eco en su alma.
+- ${selectedFragments[0]}
+- ${selectedFragments[1]}
+- ${selectedFragments[2]}
+- ${selectedFragments[3]}
 
-Fragmentos seleccionados:
+...canaliza una guía profunda, simbólica y transformadora. No expliques carta por carta. Entrelaza su esencia en una sola reflexión que hable al alma del buscador. Usa un lenguaje evocador, con ritmo y resonancia, que invite a la introspección.
 
-1. \${selectedFragments[0]}
-2. \${selectedFragments[1]}
-3. \${selectedFragments[2]}
-4. \${selectedFragments[3]}
+Puedes destacar con color dorado las palabras clave si es coherente. Si algún símbolo (☉ ☽ 🜁 🜃 🜄 🜂 ⚶ 🜔) resuena con el mensaje, incorpóralo de forma sutil.
 
-Intención manifestada:
-\${intent}
-\`;
+Concluye con un susurro alquímico que invite al lector a elegir su siguiente paso, sin decirlo explícitamente.
+`;
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
@@ -71,7 +68,7 @@ Intención manifestada:
       messages: [
         {
           role: 'system',
-          content: 'Eres un mentor simbólico y alquímico. Tu lenguaje es claro, rítmico y profundamente inspirador. Interpretas símbolos antiguos con el corazón abierto, invitando al usuario a descubrir su verdad interior sin imponerla.'
+          content: 'Eres un mentor alquímico práctico que interpreta símbolos del Codex Hermético en tono claro, inspirador y significativo. Formatea palabras clave con <span class="dorado"> cuando corresponda.'
         },
         {
           role: 'user',
