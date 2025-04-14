@@ -19,7 +19,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { selectedCards, positions } = req.body;
+    const { selectedCards, positions, authKey } = req.body;
+
+    if (authKey !== process.env.API_SECRET_KEY) {
+      return res.status(403).json({ error: 'Acceso no autorizado' });
+    }
+    
 
     if (!selectedCards || !positions || selectedCards.length !== 4) {
       return res.status(400).json({ error: 'Invalid request format' });
