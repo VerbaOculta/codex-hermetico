@@ -33,14 +33,22 @@ export default async function handler(req, res) {
     const fileContents = await fs.readFile(filePath, 'utf8');
     const codexData = JSON.parse(fileContents);
 
-    const selectedFragments = selectedCards.map((id) => {
+    const fragmentNames = selectedCards.map(id => {
       const match = codexData.find(card => String(card.ID) === String(id));
-      return match
-        ? `${match.Nombre} — ${match["Mensaje/Interpretación"]}`
-        : `Fragmento ${id}: símbolo desconocido`;
-    });
+      return match ? match.Nombre : `Fragmento ${id}`;
+    }).join(', ');
 
-    const prompt = `Has recibido cuatro fragmentos del Codex Hermético.\nCada uno lleva consigo un principio ancestral que vibra con tu búsqueda interior.\n\nTu intención declarada es: **${intent}**\n\nA partir de esta intención, y considerando estos fragmentos:\n\n- ${selectedFragments[0]}\n- ${selectedFragments[1]}\n- ${selectedFragments[2]}\n- ${selectedFragments[3]}\n\n...canaliza una guía profunda, simbólica y transformadora. No expliques carta por carta. Entrelaza su esencia en una sola reflexión que hable al alma del buscador. Usa un lenguaje evocador, con ritmo y resonancia, que invite a la introspección.\n\nPuedes destacar con color dorado las palabras clave si es coherente. Si algún símbolo (☉ ☽ 🜁 🜃 🜄 🜂 ⚶ 🜔) resuena con el mensaje, incorpóralo de forma sutil.\n\nConcluye con un susurro alquímico que invite al lector a elegir su siguiente paso, sin decirlo explícitamente.\n\nFormatea la respuesta como HTML. Cada párrafo debe ir dentro de un <p>. Las palabras importantes puedes envolverlas en <span class='dorado'>palabra</span>.`;
+    const prompt = `
+Una intención profunda se ha revelado: <span class='dorado'>${intent}</span>.
+
+Los siguientes principios han sido activados desde el Codex Hermético: ${fragmentNames}.
+
+No describas uno por uno. En lugar de eso, entrelaza sus esencias en una guía simbólica que hable directamente al alma del buscador. Tu propósito es invocar una alquimia interior.
+
+Utiliza un lenguaje evocador, con ritmo y resonancia. Puedes integrar símbolos alquímicos (☉ ☽ 🜁 🜃 🜄 🜂 ⚶ 🜔) si resuenan con el mensaje. Destaca con <span class='dorado'>palabras clave</span> cuando sientas que es significativo.
+
+Formatea en HTML. Cada párrafo debe ir dentro de <p>. concluye con una invitación introspectiva: el lector debe elegir entre dos caminos simbólicos. Uno representa el movimiento hacia afuera (acción, expansión), el otro representa la exploración interior (escucha, contemplación). No uses listas ni lo hagas explícito. Transmítelo como una decisión simbólica y personal.
+    `.trim();
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
@@ -49,16 +57,15 @@ export default async function handler(req, res) {
       messages: [
         {
           role: 'system',
-          content: 'Eres un mentor alquímico práctico que interpreta símbolos del Codex Hermético en tono claro, inspirador y significativo. Siempre entregas respuestas en formato HTML, usando <p> y <span class=\'dorado\'> para dar vida al mensaje.'
+          content: "Eres un mentor alquímico práctico que interpreta símbolos del Codex Hermético en tono claro, inspirador y significativo. Siempre entregas respuestas en formato HTML, usando <p> y <span class='dorado'> para dar vida al mensaje."
         },
         {
           role: 'user',
-          content: prompt.trim()
+          content: prompt
         }
       ]
     });
 
-    console.log("[DEBUG] Prompt generado:", prompt);
     const synthesis = completion.choices[0]?.message?.content?.trim();
     res.status(200).json({ synthesis });
 
