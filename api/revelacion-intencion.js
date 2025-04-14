@@ -18,6 +18,14 @@ export default async function handler(req, res) {
 
   res.setHeader('Access-Control-Allow-Origin', '*');
 
+  const allowedOrigin = 'https://www.omnipresence.info';
+  const requestOrigin = req.headers.origin;
+  /*
+  if (requestOrigin !== allowedOrigin) {
+    return res.status(403).json({ error: 'Origen no autorizado' });  
+  }
+  */
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
