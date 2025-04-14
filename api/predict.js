@@ -14,6 +14,8 @@ export default async function handler(req, res) {
   const allowedOrigin = 'https://www.omnipresence.info/';
   const requestOrigin = req.headers.origin;
 
+  console.log('[requestOrigin]', requestOrigin);
+
   if (requestOrigin !== allowedOrigin) {
     return res.status(403).json({ error: 'Origen no autorizado' });  
   }
