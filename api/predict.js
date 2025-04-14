@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
 
-  const allowedOrigin = 'https://www.omnipresence.info/';
+  const allowedOrigin = 'https://www.omnipresence.info';
   const requestOrigin = req.headers.origin;
 
   console.log('[requestOrigin]', requestOrigin);
