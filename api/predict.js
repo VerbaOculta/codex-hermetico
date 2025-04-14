@@ -10,6 +10,14 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+
+  const allowedOrigin = 'https://www.omnipresence.info/';
+  const requestOrigin = req.headers.origin;
+
+  if (requestOrigin !== allowedOrigin) {
+    return res.status(403).json({ error: 'Origen no autorizado' });  
+  }
+
   if (req.method === 'OPTIONS') {
     return res.status(200).end(); // preflight CORS
   }
