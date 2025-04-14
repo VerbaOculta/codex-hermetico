@@ -22,7 +22,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  const { selectedCards, intent } = req.body;
+  const { selectedCards, intent, authKey } = req.body;
+
+  if (authKey !== process.env.API_SECRET_KEY) {
+    return res.status(403).json({ error: 'Acceso no autorizado' });
+  }
 
   if (!selectedCards || !intent) {
     return res.status(400).json({ error: 'Faltan datos: selectedCards o intent' });
